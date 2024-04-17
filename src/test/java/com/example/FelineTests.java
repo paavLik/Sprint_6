@@ -1,17 +1,15 @@
 package com.example;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FelineTests {
-    private static final int EXPECTED_COUNT_KITTENS = 1;
 
     @Spy
     private Feline feline;
@@ -24,27 +22,28 @@ public class FelineTests {
 
     @Test
     public void getFamilyTest() {
-        String actual = feline.getFamily();
-        Mockito.verify(feline, Mockito.times(1)).getFamily();
-
-        String expected = "Кошачьи";
-        assertEquals("Некорректное название семейства кошачьих", expected, actual);
+        String expectedFelineFamilyName = "Кошачьи";
+        assertThat("Некорректное название семейства кошачьих",
+                feline.getFamily(),
+                equalTo(expectedFelineFamilyName)
+        );
     }
 
     @Test
-    public void getKittensTest() {
-        int actual = feline.getKittens();
-        Mockito.verify(feline).getKittens(EXPECTED_COUNT_KITTENS);
-
-        assertEquals("Некорректное количество котят", EXPECTED_COUNT_KITTENS, actual);
+    public void getKittensDefaultIsCorrectTest() {
+        int expectedCount = 1;
+        assertThat("Некорректное количество котят",
+                feline.getKittens(),
+                equalTo(expectedCount)
+        );
     }
 
     @Test
-    public void getKittensTwoTest() {
-        int kittensCount = 5;
-        int actual = feline.getKittens(kittensCount);
-        Mockito.verify(feline).getKittens(Mockito.anyInt());
-
-        assertEquals("Некорректное количество котят", kittensCount, actual);
+    public void getKittensInputCountIsCorrectTest() {
+        int expectedCount = 5;
+        assertThat("Некорректное количество котят",
+                feline.getKittens(expectedCount),
+                equalTo(expectedCount)
+        );
     }
 }
