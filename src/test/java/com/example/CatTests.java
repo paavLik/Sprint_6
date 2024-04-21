@@ -23,7 +23,7 @@ public class CatTests {
     public void getSoundTest() {
         Cat cat = new Cat(feline);
         String actual = cat.getSound();
-        assertEquals("Мяу", actual);
+        assertEquals("Неверный звук кота!", "Мяу", actual);
     }
 
     @Test
